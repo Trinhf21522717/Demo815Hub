@@ -4,10 +4,6 @@
 
 <img id="real-time-image" src="#" alt="Ảnh Theo Thời Gian Thực">
 
-@* <script type="module"> 
-    import microsoftsignalr from 'https://cdn.jsdelivr.net/npm/@@microsoft/signalr@7.0.11/+esm'
-</script> *@
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.10/signalr.min.js"></script>
 
 <script>
@@ -16,24 +12,9 @@
         return console.error(err.toString())
     })
 
-    connectionImage.on("ReceiveImage", (imageData) => {
-        // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
-        @* var image = JSON.parse(imageData); *@
-
-        console.log("imageData");
-        console.log(imageData);
-
-        document.getElementById("real-time-image").src = "data:image/png;base64," + imageData;
-
-        @* // Hiển thị hình ảnh trên view
-        var img = new Image();
-        img.src = image.data;
-        img.alt = image.alt;
-        img.width = image.width;
-        img.height = image.height;
-
-        // Thêm hình ảnh vào view
-        document.body.appendChild(img); *@
+    connectionImage.on("ReceiveImage", (imageData, encodeType) => {
+        console.log(`Get image`);
+        document.getElementById("real-time-image").src = `data:image/png;${encodeType},${imageData}`;
     })
 
     var connectionMessage = new signalR.HubConnectionBuilder().withUrl("/RealTimeMessage").build();
