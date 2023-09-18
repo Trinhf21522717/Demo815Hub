@@ -19,10 +19,10 @@ namespace Advanced.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostMessage([FromQuery] string Message)
+        public async Task<IActionResult> PostMessage([FromForm] string User, [FromForm] string Message)
         {
-            Console.WriteLine($"Got message {Message}");
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", Message);
+            Console.WriteLine($"Got message: user: {User}: {Message}");
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", User, Message);
             return Ok(new { message = "Message uploaded" });
         }
     }

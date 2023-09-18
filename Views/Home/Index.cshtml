@@ -1,6 +1,6 @@
 <h1>Manage</h1>
 
-<h2 id="real-time-message">Chưa có gì hết</h2>
+<ol id="real-time-message"></ol>
 
 <img id="real-time-image" src="#" alt="Ảnh Theo Thời Gian Thực">
 
@@ -22,8 +22,13 @@
         return console.error(err.toString())
     })
 
-    connectionMessage.on("ReceiveMessage", (Message) => {
-        console.log("Có hàng:", Message)
-        document.getElementById("real-time-message").textContent = Message;
+    connectionMessage.on("ReceiveMessage", (User, Message) => {
+        console.log(`ReceiveMessage: ${User}: ${Message}`)
+        console.log(document.getElementById("real-time-message"))
+        var newListItem = document.createElement("li")
+        newListItem.appendChild(document.createTextNode(`${User}: ${Message}`))
+        document.getElementById("real-time-message").appendChild(
+            newListItem
+        )
     })
 </script>
